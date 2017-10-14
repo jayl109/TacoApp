@@ -1,0 +1,55 @@
+<form action="/tacos/create" method="post">
+  <select name="shells">
+    <% @shells.each do |shell| %>
+
+    <option value= <%= shell["name"].tr(" ","_")  %> > <%= shell["name"] %></option>
+    <% end %>
+  </select>
+  <br><br>
+  <select name="baselayers">
+    <% @baselayers.each do |base| %>
+    <option value= <%= base["name"].tr(" ","_")  %> > <%= base["name"] %></option>
+    <% end %>
+  </select>
+  <br><br>
+  <select name="mixins[0]">
+    <option value= <%= "None" %> > <%= "None" %></option>
+    <% @mixins.each do |mixin| %>
+    <option value= <%= mixin["name"].tr(" ","_") %> > <%= mixin["name"] %></option>
+    <% end %>
+  </select>
+  <select name="mixins[1]">
+    <option value= <%= "None" %> > <%= "None" %></option>
+    <% @mixins.each do |mixin| %>
+    <option value= <%= mixin["name"].tr(" ","_")  %> > <%= mixin["name"] %></option>
+    <% end %>
+  </select>
+  <br><br>
+  <select name="seasonings[0]">
+    <option value= <%= "None" %> > <%= "None" %></option>
+    <% @seasonings.each do |seasoning| %>
+    <option value= <%= seasoning["name"].tr(" ","_")  %> > <%= seasoning["name"] %></option>
+    <% end %>
+  </select>
+  <select name="seasonings[1]">
+    <option value= <%= "None" %> > <%= "None" %></option>
+    <% @seasonings.each do |seasoning| %>
+    <option value= <%= seasoning["name"].tr(" ","_")  %> > <%= seasoning["name"] %></option>
+    <% end %>
+  </select>
+  <br><br>
+  <select name="condiments[0]">
+    <option value= <%= "None" %> > <%= "None" %></option>
+    <% @condiments.each do |condiment| %>
+    <option value= <%= condiment["name"].tr(" ","_")  %> > <%= condiment["name"] %></option>
+    <% end %>
+  </select>
+  <select name="condiments[1]">
+    <option value= <%= "None" %> > <%= "None" %></option>
+    <% @condiments.each do |condiment| %>
+    <option value= <%= condiment["name"].tr(" ","_")  %> > <%= condiment["name"] %></option>
+    <% end %>
+  </select>
+<br><br>
+<input type="submit">
+</form>

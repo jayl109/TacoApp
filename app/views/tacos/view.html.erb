@@ -1,0 +1,42 @@
+<p1> Taco Description: <%= @taco.description %> </p1>
+<br><br>
+<p1> Taco shell: <%= @taco.shell%> </p1>
+<br><br>
+<p1> Taco base layer: <%= @taco.baselayers %> </p1>
+<br><br>
+<p1> Taco mixin(s):
+  <br><br>
+  <% @taco.mixin.each do | mixin| %>
+  <% if mixin != "None" %>
+  <%= mixin %>
+  <br><br>
+  <% end %>
+  <% end %>
+
+</p1>
+
+<p1> Taco seasoning(s):
+  <br><br>
+  <% @taco.seasoning.each do |seasoning| %>
+  <% if seasoning != "None" %>
+  <%= seasoning %>
+  <br><br>
+  <% end %>
+  <% end %>
+
+</p1>
+
+<p1> Taco Condiment(s):
+  <br><br>
+  <% @taco.condiment.each do |condiment| %>
+  <% if condiment != "None" %>
+  <%= condiment %>
+  <br><br>
+  <% end %>
+  <% end %>
+
+</p1>
+
+<%= link_to "Return to home page ", "/"%>
+<br><br>
+<%= link_to "Delete ", delete_taco_path(params[:index])%>

@@ -1,0 +1,33 @@
+<% require 'yaml' %>
+<% if flash[:message] != nil %>
+<%= flash[:message] %>
+<% end %>
+<div> "Welcome!" <div>
+<br><br>
+<% if @tacos == nil || @tacos == []  %>
+<%= "You have no tacos, create one!" %>
+<% else %>
+<table>
+  <tr>
+    <th>Taco Number</th>
+    <th>Description</th>
+    <th>More info</th>
+    <th>Delete</th>
+  </tr>
+  <% @tacos = @tacos.map {|taco| YAML.load(taco)} %>
+  <% @tacos.each_with_index do |taco, index| %>
+  <tr>
+    <td><%= index %></td>
+    <td><%= taco.short_description %> </td>
+    <td><%= link_to "View Taco ", view_taco_path(index) %></td>
+    <td><%= link_to "Delete ", delete_taco_path(index)%> </td>
+  </tr>
+  <% end %>
+<% end %>
+</table>
+
+<br><br>
+
+<%= link_to "Create a Taco", new_taco_path %>
+<br><br>
+<%= link_to "Create a Random Taco", "/tacos/random" %>
