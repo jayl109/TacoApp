@@ -19,8 +19,9 @@ class TacosController < ApplicationController
     puts("here")
     puts(taco.shells)
     taco.save
+    puts("saved")
     current_user.tacos << taco
-
+    puts("added")
     redirect_to "/"
     return
   end
