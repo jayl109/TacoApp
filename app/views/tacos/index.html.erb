@@ -1,4 +1,3 @@
-<% require 'yaml' %>
 <% if flash[:message] != nil %>
 <%= flash[:message] %>
 <% end %>
@@ -7,6 +6,8 @@
 <% if @tacos == nil || @tacos == []  %>
 <%= "You have no tacos, create one!" %>
 <% else %>
+<%= "Your Tacos:" %>
+
 <table>
   <tr>
     <th>Taco Number</th>
@@ -14,13 +15,12 @@
     <th>More info</th>
     <th>Delete</th>
   </tr>
-  <% @tacos = @tacos.map {|taco| YAML.load(taco)} %>
   <% @tacos.each_with_index do |taco, index| %>
   <tr>
     <td><%= index %></td>
     <td><%= taco.short_description %> </td>
-    <td><%= link_to "View Taco ", view_taco_path(index) %></td>
-    <td><%= link_to "Delete ", delete_taco_path(index)%> </td>
+    <td><%= link_to "View Taco ", view_taco_path(taco) %></td>
+    <td><%= link_to "Delete ", delete_taco_path(taco)%> </td>
   </tr>
   <% end %>
 <% end %>

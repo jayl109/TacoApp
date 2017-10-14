@@ -1,36 +1,25 @@
 require 'open-uri'
 class TacosController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  rescue_from ActionDispatch::Cookies::CookieOverflow :with => :warn_and_redirect
-  def warn_and_redirect
-    flash[:message] = "You cant make more tacos, delete one first!"
-    redirect_to "/"
-  end
+  before_action :authenticate_user!
+
+
   def index
-   @tacos = session[:tacos]
-   puts(@tacos)
+   @tacos = current_user.tacos
   end
   def delete
-    tacos = session[:tacos]
-    tacos.delete_at(params[:taco].to_i)
-
-    session[:tacos] = tacos
-
+    @taco = Taco.find(params[:id])
+    @taco.destroy
     redirect_to "/"
   end
   def create
     #taco = Taco.new(params[:shells].tr("_") ,params[:baselayers], params[:mixins],  params[:condiments], params[:seasonings])
-    taco = Taco.new(params)
-    puts("taco is #{taco}")
-
-      if session[:tacos] == nil
-        session[:tacos] = [taco.to_yaml]
-      else
-        session[:tacos] << taco.to_yaml
-      end
-
-
-
+    taco = Taco.new()
+    taco.populate(params)
+    puts("here")
+    puts(taco.shells)
+    taco.save
+    current_user.tacos << taco
 
     redirect_to "/"
     return
@@ -52,23 +41,14 @@ class TacosController < ApplicationController
     @condiments = JSON.parse(open(url).read)
   end
   def random
-    puts("ja")
     taco = Taco.random
-    puts(taco)
-    begin
-      if session[:tacos] == nil
-        session[:tacos] = [taco.to_yaml]
-      else
-        session[:tacos] << taco.to_yaml
-      end
-    rescue CookieOverflow
-      flash[:message] = "You cannot store any more tacos, delete one first!"
-    end
+    current_user.tacos << taco
+
     redirect_to "/"
     return
 
   end
   def view
-    @taco = YAML.load(session[:tacos][params[:index].to_i])
+    @taco = Taco.find(params[:id])
   end
 end

@@ -1,6 +1,6 @@
 <p1> Taco Description: <%= @taco.description %> </p1>
 <br><br>
-<p1> Taco shell: <%= @taco.shell%> </p1>
+<p1> Taco shell: <%= @taco.shells%> </p1>
 <br><br>
 <p1> Taco base layer: <%= @taco.baselayers %> </p1>
 <br><br>
@@ -39,4 +39,4 @@
 
 <%= link_to "Return to home page ", "/"%>
 <br><br>
-<%= link_to "Delete ", delete_taco_path(params[:index])%>
+<%= link_to "Delete ", delete_taco_path(@taco)%>
