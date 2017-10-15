@@ -1,11 +1,21 @@
 <p1> Taco Description: <%= @taco.description %> </p1>
 <br><br>
+<br><br>
+
 <p1> Taco shell: <%= @taco.shells%> </p1>
 <br><br>
+<br><br>
+
 <p1> Taco base layer: <%= @taco.baselayers %> </p1>
 <br><br>
+<br><br>
+
 <p1> Taco mixin(s):
   <br><br>
+  <% if @taco.mixin.length == 0 %>
+  <div> None </div>
+  <br><br>
+  <% end %>
   <% @taco.mixin.each do | mixin| %>
   <% if mixin != "None" %>
   <%= mixin %>
@@ -14,9 +24,14 @@
   <% end %>
 
 </p1>
+<br><br>
 
 <p1> Taco seasoning(s):
   <br><br>
+  <% if @taco.seasoning.length == 0 %>
+  <div> None </div>
+  <br><br>
+  <% end %>
   <% @taco.seasoning.each do |seasoning| %>
   <% if seasoning != "None" %>
   <%= seasoning %>
@@ -25,9 +40,14 @@
   <% end %>
 
 </p1>
+<br><br>
 
 <p1> Taco Condiment(s):
   <br><br>
+  <% if @taco.condiment.length == 0 %>
+  <div> None </div>
+  <br><br>
+  <% end %>
   <% @taco.condiment.each do |condiment| %>
   <% if condiment != "None" %>
   <%= condiment %>

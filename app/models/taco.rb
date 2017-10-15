@@ -3,8 +3,17 @@ class Taco < ActiveRecord::Base
   @@mixin_num = 3
   @@seasoning_num = 4
   belongs_to :user
+  def self.condiment_num
+    return @@condiment_num
+  end
+  def self.mixin_num
+    return @@mixin_num
+  end
+  def self.seasoning_num
+    return @@seasoning_num
+  end
 
-
+  #takes in a hash, and inserts those values into the taco
   def populate(p)
 
     update_attribute(:shells, p["shells"].tr("_", " "))
@@ -13,6 +22,7 @@ class Taco < ActiveRecord::Base
     update_attribute(:condiment,  p["seasonings"].values.select{|ingredient| ingredient != "None"}.map{|ingredient| ingredient.tr("_", " ")}.uniq)
 
   end
+  #generates a random taco and returns it (saves it as well, but doesnt connect it to the user)
   def self.random
     url = "https://tacos-sayjfycwsy.now.sh/shells"
     shells = JSON.parse(open(url).read).sample["name"]
@@ -20,19 +30,28 @@ class Taco < ActiveRecord::Base
     baselayers = JSON.parse(open(url).read).sample["name"]
     url = "https://tacos-sayjfycwsy.now.sh/mixins"
     mix_in_choices = JSON.parse(open(url).read) << {"name" => "None"}
-    mixins = [mix_in_choices.sample()["name"],  mix_in_choices.sample()["name"]]
+    mixins = []
+    @@mixin_num.times do
+      mixins << mix_in_choices.sample()["name"]
+    end
     url = "https://tacos-sayjfycwsy.now.sh/seasonings"
     seasoning_choices = JSON.parse(open(url).read) << {"name" => "None"}
-    puts(seasoning_choices)
-    seasonings = [seasoning_choices.sample()["name"],  seasoning_choices.sample()["name"]]
+    seasonings = []
+    @@seasoning_num.times do
+      seasonings << seasoning_choices.sample()["name"]
+    end
     url = "https://tacos-sayjfycwsy.now.sh/condiments"
+    condiments = []
     condiment_choices = JSON.parse(open(url).read) << {"name" => "None"}
-    condiments = [ condiment_choices.sample()["name"], condiment_choices.sample()["name"]]
-    #@condiments = [{"0" => "", "val" => condiment_choices.sample()["name"]},{"1" => "", "val" => condiment_choices.sample()["name"]}]
+
+    @@condiment_num.times do
+      condiments << condiment_choices.sample()["name"]
+    end
     t = Taco.new
     t.update_attributes({:shells => shells, :baselayers => baselayers, :mixin => mixins, :condiment => condiments, :seasoning => seasonings})
     return t
   end
+  #provides a shorter description (for table viewing purposes)
   def short_description
     puts("here it is")
     puts(self.description)
@@ -40,6 +59,7 @@ class Taco < ActiveRecord::Base
     s_description = self.description
     s_description.length > 50 ? "#{s_description[0...50]}..." : s_description
   end
+  #returns a description of the taco you made
   def description
     beginning = "A delicious taco made with a #{self.shells} shell with #{self.baselayers}, "
     last = ""

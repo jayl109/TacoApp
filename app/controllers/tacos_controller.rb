@@ -2,7 +2,13 @@ require 'open-uri'
 class TacosController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_action :authenticate_user!
-
+  before_filter :set_nums
+  #a workaround since views can only access instance variables of controller
+  def set_nums
+      @mixin_num = Taco.mixin_num
+      @seasoning_num = Taco.seasoning_num
+      @condiment_num = Taco.condiment_num
+  end
 
   def index
    @tacos = current_user.tacos
