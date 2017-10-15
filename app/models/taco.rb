@@ -1,5 +1,7 @@
 class Taco < ActiveRecord::Base
-
+  @@condiment_num = 2
+  @@mixin_num = 3
+  @@seasoning_num = 4
   belongs_to :user
 
 
@@ -12,7 +14,6 @@ class Taco < ActiveRecord::Base
 
   end
   def self.random
-    puts("gdi")
     url = "https://tacos-sayjfycwsy.now.sh/shells"
     shells = JSON.parse(open(url).read).sample["name"]
     url = "https://tacos-sayjfycwsy.now.sh/baselayers"
@@ -28,7 +29,6 @@ class Taco < ActiveRecord::Base
     condiment_choices = JSON.parse(open(url).read) << {"name" => "None"}
     condiments = [ condiment_choices.sample()["name"], condiment_choices.sample()["name"]]
     #@condiments = [{"0" => "", "val" => condiment_choices.sample()["name"]},{"1" => "", "val" => condiment_choices.sample()["name"]}]
-    puts("here")
     t = Taco.new
     t.update_attributes({:shells => shells, :baselayers => baselayers, :mixin => mixins, :condiment => condiments, :seasoning => seasonings})
     return t
