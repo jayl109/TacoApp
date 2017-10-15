@@ -1,24 +1,6 @@
 # README
+Webapp created for ClickTime as part of their coding challenge.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This is a simple webapp to create, view, and delete your tacos.
+There is currently no limit to the # of tacos you can create, so have fun!
+Note: The login system currently treats your email as a "username", and will not send you any emails.
